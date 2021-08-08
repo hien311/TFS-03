@@ -4,9 +4,13 @@ const equals = document.querySelector(".done")
 const ac = document.querySelector(".ac")
 const del = document.querySelector(".del")
 const power = document.querySelector('.power')
+const input = document.querySelector("input")
+const form = document.getElementById("myForm")
 let isTyping = true
-let isPower = true;
+let isPower = false
+let fontSize = 28
 // css result screen
+
 
 result.onclick = function(e) {
     console.log(e.target)
@@ -61,20 +65,19 @@ power.onclick = function(e) {
 
 equals.onclick = function() {
     if (result[0].innerHTML != "" && result[0].innerHTML[result[0].innerHTML.length-1] != " ") {
-        let a = result[0].innerHTML;
+        
         isTyping = false
         // css result screen
         result[0].classList.remove("focused");
         result[1].classList.add("focused")
-        // tinh tong?
-        fetch('http://localhost:3000/result', {
-            method: 'POST',
-            body: JSON.stringify(a)
-        })
-        .then(response => response.json())
+        // gui du lieu ve serve
+        let url = 'http://localhost:3000/result/' + result[0].innerHTML
+        fetch(url)
+        .then(res => res.json())
         .then(data => {
-            console.log(data)
+            data =  Math.round(data * 100)/100
+            result[1].innerHTML = data
         })
+        .catch(err => console.log(err))
     }
 }
-
