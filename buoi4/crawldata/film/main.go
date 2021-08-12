@@ -1,11 +1,13 @@
 package main
 
 import (
+	db "crawl/database"
 	crawl "crawl/func"
-	"fmt"
 )
 
 func main() {
 	url := "https://www.imdb.com/chart/top/?ref_=nv_mv_250"
-	fmt.Println(crawl.CrawlData(url))
+	data := crawl.CrawlData(url)
+	database := db.Connect()
+	db.Insert(database, data)
 }
