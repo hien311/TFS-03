@@ -9,8 +9,8 @@ import (
 
 func CrawlData(url string) map[int]Film {
 	var films = make(map[int]Film)
-	u, _ := http.Get(url)
-	data, _ := goquery.NewDocumentFromReader(u.Body)
+	res, _ := http.Get(url)
+	data, _ := goquery.NewDocumentFromReader(res.Body)
 	data.Find(".lister-list tr").Each(func(i int, s *goquery.Selection) {
 		// bien tam de  them du lieu vao
 		temp := Film{}
