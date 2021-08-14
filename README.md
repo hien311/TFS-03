@@ -57,6 +57,7 @@ Bai tap ve nha + cau hoi?
 │       └──main.go
 ├── buoi5
 │   ├── drop.js
+│   ├── index.js
 │   ├── isPalindrome.js
 │   ├── seekAndDestroy.js
 │   ├── toSpinalCase.js
