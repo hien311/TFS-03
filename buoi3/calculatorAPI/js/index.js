@@ -7,7 +7,7 @@ const power = document.querySelector(".power");
 const input = document.querySelector("input");
 const form = document.getElementById("myForm");
 let isTyping = true;
-let isPower = false;
+let isPower = true;
 let fontSize = 28;
 // css result screen
 
@@ -67,6 +67,11 @@ del.onclick = function (e) {
 
 power.onclick = function (e) {
     isPower = !isPower;
+    result[0].innerHTML = "";
+    result[1].innerHTML = "";
+    result[1].classList.remove("focused");
+    result[0].classList.add("focused");
+    isTyping = true;
     const screen = document.querySelector(".screen");
     screen.classList.toggle("display", isPower);
 };

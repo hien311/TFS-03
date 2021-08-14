@@ -18,28 +18,41 @@ func init() {
 
 func calcResult(w http.ResponseWriter, r *http.Request) {
 	data := strings.Split(r.URL.String()[8:], "%20")
-	symbol := string("")
 	result, _ := strconv.ParseFloat(data[0], 64)
-	for i, v := range data {
-		if i > 0 {
-			if v == "+" || v == "-" || v == "x" || v == "/" {
-				symbol = v
-			} else {
-				temp, _ := strconv.ParseFloat(v, 64)
-				switch symbol {
+	var result2 float64 = 0
+	var sym2, sym1 string
+	for i := range data {
+		if data[i] == "+" || data[i] == "-" || data[i] == "x" || data[i] == "/" {
+			sym1 = data[i]
+			if data[i] == "+" || data[i] == "-" {
+				switch sym2 {
 				case "+":
-					result += temp
+					result += result2
 				case "-":
-					result -= temp
-				case "x":
-					result *= temp
-				case "/":
-					result /= temp
-				default:
-					return
+					result -= result2
 				}
+				result2, _ = strconv.ParseFloat(data[i+1], 64)
+				sym2 = data[i]
+			}
+		} else {
+			value, _ := strconv.ParseFloat(data[i], 64)
+			switch sym1 {
+			case "x":
+				result2 *= value
+			case "/":
+				result2 /= value
 			}
 		}
+	}
+	switch sym2 {
+	case "+":
+		result += result2
+	case "-":
+		result -= result2
+	case "*":
+		result *= result2
+	case "/":
+		result /= result2
 	}
 	resultJSON, _ := json.Marshal(result)
 	fmt.Fprintln(w, string(resultJSON))
