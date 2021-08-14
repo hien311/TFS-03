@@ -1,5 +1,5 @@
 function toSpinalCase(s) {
-    i = 1
+    let i = 1
     s = s.replace(s[0],s[0].toLowerCase())
     while (i < s.length) {
       if (s[i].codePointAt() > 59 && s[i].codePointAt() < 91) {
@@ -24,4 +24,4 @@ function toSpinalCase(s) {
     return s 
   }
   
-  toSpinalCase("My---Name---is--Hien")
+export default toSpinalCase

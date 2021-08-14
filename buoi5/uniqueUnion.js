@@ -1,8 +1,9 @@
 function uniqueUnion(...theArgs) {
-    a = []
+    let a = []
     while (theArgs.length > 0) {
       a = [...a,...theArgs.shift()]
     }
     return  [... new Set(a)]
   }
   
+  export default uniqueUnion
