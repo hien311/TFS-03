@@ -12,32 +12,25 @@ Bai tap ve nha + cau hoi?
 │   │   ├── data.xt
 │   │   ├── primesdata.txt
 │   │   ├── write.txt
-│   └── Sort
-│       ├── main.go
-│       └── sortfunc
-│           └── Sort.go
-│       ├── API.go
-│       ├── Fibonaci.go       
-│       ├── JSONandParse.go    
-│       ├── ReadFile.go
-│       ├── tomtat.md
-│       └── WriteFile.go 
+│   ├── Sort
+│   │   ├── main.go
+│   │   └── sortfunc
+│   │        └── Sort.go
+│   ├── API.go
+│   ├── Fibonaci.go       
+│   ├── JSONandParse.go    
+│   ├── ReadFile.go
+│   ├── tomtat.md
+│   └── WriteFile.go 
 │       
 ├── buoi3
 │   ├── calculatorAPI
-│   │   ├── css
-│   │   │   └── calc.css
-│   │   ├── js
-│   │   │   └── index.js
-│   │   ├──calulator.html
-│   │   └──main.go
-│   └── calculatorAPI
-│       ├── css
-│       │   └── calc.css
-│       ├── js
-│       │   └── index.js
-│       ├──calulator.html
-│       └──main.go
+│      ├── css
+│      │   └── calc.css
+│      ├── js
+│      │   └── index.js
+│      ├──calulator.html
+│      └──main.go
 ├── buoi4
 │   ├──crawldata
 │   │  └──film
