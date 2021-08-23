@@ -36,11 +36,15 @@ func calcResult(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			value, _ := strconv.ParseFloat(data[i], 64)
-			switch sym1 {
-			case "x":
-				result2 *= value
-			case "/":
-				result2 /= value
+			if result2 == 0 {
+				result2 = value
+			} else {
+				switch sym1 {
+				case "x":
+					result2 *= value
+				case "/":
+					result2 /= value
+				}
 			}
 		}
 	}
@@ -53,6 +57,8 @@ func calcResult(w http.ResponseWriter, r *http.Request) {
 		result *= result2
 	case "/":
 		result /= result2
+	default:
+		result = result2
 	}
 	resultJSON, _ := json.Marshal(result)
 	fmt.Fprintln(w, string(resultJSON))
