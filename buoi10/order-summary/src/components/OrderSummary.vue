@@ -30,10 +30,6 @@ export default {
         return {
             title: "Order Summary",
             text: "You can now listen to millions of songs, audiobooks and podcasts on any device anywhere  you like!",
-             plans: [
-                {name: "Annual Plan", price:"$59.99/year"},
-                {name: 'Pro Plan', price: '99.99/year'}
-            ],
             planStyle: 0,
             isConfirm: false
         }
