@@ -4,10 +4,12 @@ import (
 	"github.com/gorilla/mux"
 
 	controller "tfs-03db/controller"
+	"tfs-03db/middleware"
 )
 
 func Routes() *mux.Router {
-	r := mux.NewRouter()
+	r := mux.NewRouter().StrictSlash(true)
+	r.Use(middleware.ContentType)
 	r.Path("/").HandlerFunc(controller.Home).Methods("GET")
 	r.Path("/peoples").HandlerFunc(controller.GetAllPeople).Methods("GET")
 	r.Path("/peoples/{id:[0-9]+}").HandlerFunc(controller.GetPeopleByID).Methods("GET")
