@@ -9,3 +9,5 @@ type Film struct {
 	Link     string `json:"link"`
 	Rating   string `json:"Rating"`
 }
+
+type Films []Film

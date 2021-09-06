@@ -7,10 +7,10 @@ import (
 	"gorm.io/gorm"
 )
 
-func Insert(db *gorm.DB, data map[int]crawl.Film) {
+func Create(db *gorm.DB, data crawl.Films) {
 	db.AutoMigrate(&crawl.Film{})
 
-	for i := 1; i <= len(data); i++ {
+	for i := 0; i < len(data); i++ {
 		db.Create(&crawl.Film{Rank: data[i].Rank, Name: data[i].Name, Year: data[i].Year, Rating: data[i].Rating, Director: data[i].Director, Link: data[i].Link, Writers: data[i].Writers})
 	}
 
@@ -29,4 +29,10 @@ func Insert(db *gorm.DB, data map[int]crawl.Film) {
 		}
 		<-done */ //Hình như đoạn này dùng Goroutine chậm hơn đoạn code bên trên đúng ko ạ?
 
+}
+
+func GetAll(db *gorm.DB) crawl.Films {
+	var Films crawl.Films
+	db.Find(&Films)
+	return Films
 }

@@ -9,5 +9,5 @@ func main() {
 	url := "https://www.imdb.com/chart/top/?ref_=nv_mv_250"
 	data := crawl.CrawlData(url)
 	database := db.Connect()
-	db.Insert(database, data)
+	db.Create(database, data)
 }

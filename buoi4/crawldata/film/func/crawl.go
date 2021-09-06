@@ -7,8 +7,8 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func CrawlData(url string) map[int]Film {
-	var films = make(map[int]Film)
+func CrawlData(url string) Films {
+	var films Films
 	res, _ := http.Get(url)
 	data, _ := goquery.NewDocumentFromReader(res.Body)
 	data.Find(".lister-list tr").Each(func(i int, s *goquery.Selection) {
