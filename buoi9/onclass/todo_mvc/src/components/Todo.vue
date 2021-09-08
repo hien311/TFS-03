@@ -1,11 +1,11 @@
 <template>
-    <div class="view"
+    <div class="view" :data-id=todo.id
         @mouseover="xOn"
         @mouseout="xOff"
     >
-        <input @click="updateStatusTask" type="checkbox"  class="toggle" :checked="todo.status">
+        <input @click="updateTaskStatus(todo)" type="checkbox"  class="toggle" :checked="todo.status">
         <label @dblclick="editLabel" :class="{completed: todo.status, editing: isEdit}">{{todo.name}}</label>
-        <button :class="{destroy:true, editing: isEdit}" @click="removeTask"></button>
+        <button :class="{destroy:true, editing: isEdit}" @click="removeTask(todo)"></button>
         <input type="text" @keydown.enter="saveEdit" :class="{edit: isEdit, editing: !isEdit}" v-focus>
     </div>
 </template>
@@ -17,7 +17,6 @@ export default {
     data() {
         return {
             isEdit: false,
-            oldTaskName: ""
         }
     },
     created: function () {
@@ -28,7 +27,7 @@ export default {
     },
     props: ['todo'],
     methods: {
-        ...mapActions(['updateStatusTask', 'removeTask',"updateNameTask"]),
+        ...mapActions(['updateTaskStatus', 'removeTask',"updateTaskName"]),
         xOn(e) {
             const destroy = e.target.closest(".view").children[2]
             destroy.innerHTML = "×"
@@ -45,13 +44,13 @@ export default {
         },
         saveEdit(e) {
             this.isEdit = false
-            this.updateNameTask({oldName: this.oldTaskName, newName: e.target.value})
+            this.updateTaskName({task: this.todo, newName: e.target.value})
         },
         saveEditMouse(e) {
             const classList = e.target.classList
-            if (classList.value !== 'edit') {
+            if (classList.value !== 'edit' && this.isEdit === true) {
                 const newName = document.querySelector('.edit').value
-                this.updateNameTask({oldName: this.oldTaskName, newName: newName})
+                this.updateTaskName({task: this.todo, newName: newName})
                 this.isEdit = false
             }
         }

@@ -1,11 +1,11 @@
 <template>
     <section>
         <input @click="completeAllTasks" type="checkbox" id="toggle-all" class="toggle-all">
-        <label for="toggle-all" class="toggle-all" @click="completeAllTasks">Mark all as complete</label>
+        <label for="toggle-all" class="toggle-all">Mark all as complete</label>
         <ul id="todo-list" >
             <li :class = "{ completed: todo.status}"
                 v-for="todo in tasks"
-                :key="todo.name"
+                :key="todo.id"
             >
                 <Todo :todo="todo"/>
             </li>

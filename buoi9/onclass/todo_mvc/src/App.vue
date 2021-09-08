@@ -9,6 +9,9 @@
 <script>
 export default {
   name: 'App',
+  created() {
+    this.$store.dispatch("loadTodos")
+  },
   components: {
     Header: () => import('./components/Header.vue'),
     TodoList: () => import('./components/TodoList.vue'),

@@ -1,16 +1,19 @@
 <template>
     <div id="Header">
       <h1>todo</h1>
-      <input type="text"  @keyup.enter="addTask" placeholder="What needs to be done?">
+      <input type="text"  @keyup.enter="addTask"  placeholder="What needs to be done?">
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
-  name: "Header",
+  name: "Header", 
   methods: {
     ...mapActions(['addTask'])
+  },
+  computed: {
+    ...mapState(['newTask'])
   }
 }
 </script>
