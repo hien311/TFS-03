@@ -11,10 +11,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func badRequest(w http.ResponseWriter, r *http.Request) {
-	http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
-}
-
 func Create(w http.ResponseWriter, r *http.Request) {
 	var people model.People
 	logrus.Info("Insert people to DB")
@@ -22,20 +18,15 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		logrus.Error("Decode error", err)
 	}
 
-	if err := db.Connect().Create(&people); err != nil {
-		logrus.Error("Error when insert to DB", err)
-		badRequest(w, r)
-	}
-
+	db.Connect().Create(&people)
 	http.RedirectHandler("/", 200)
 }
 
 func GetAllPeople(w http.ResponseWriter, r *http.Request) {
 	var peoples model.Peoples
 	logrus.Info("Get all people")
-	if err := db.Connect().Find(&peoples); err != nil {
-		logrus.Error(err)
-	}
+	db.Connect().Find(&peoples)
+
 	if err := json.NewEncoder(w).Encode(&peoples); err != nil {
 		logrus.Error(err)
 	}
@@ -46,9 +37,8 @@ func GetPeopleByID(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	logrus.Info("Find people by ID")
-	if err := db.Connect().First(&people, id); err != nil {
-		logrus.Error(err)
-	}
+	db.Connect().First(&people, id)
+
 	if err := json.NewEncoder(w).Encode(people); err != nil {
 		logrus.Error(err)
 	}
@@ -60,12 +50,14 @@ func UpdatePeople(w http.ResponseWriter, r *http.Request) {
 	logrus.Info("Update people")
 	if err := json.NewDecoder(r.Body).Decode(&people); err != nil {
 		logrus.Error("Update fail")
-		badRequest(w, r)
+		json.NewEncoder(w).Encode("Fail!!")
+		return
 	}
 
 	i, err := strconv.ParseUint(id, 10, 32)
 	if err != nil {
 		logrus.Error("Error: string convert", err)
+		return
 	}
 
 	people.ID = uint(i)
@@ -85,6 +77,7 @@ func SoftDeletePeople(w http.ResponseWriter, r *http.Request) {
 	if err := db.Connect().First(&people, uint(i)); err != nil {
 		logrus.Error("Error: find", err)
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
 	}
 	people.Deleted = true
 	db.Connect().Save(&people)
@@ -97,6 +90,7 @@ func DeletePeople(w http.ResponseWriter, r *http.Request) {
 	i, err := strconv.ParseUint(id, 10, 32)
 	if err != nil {
 		logrus.Error("Error: string convert", err)
+		return
 	}
 
 	db.Connect().Delete(model.People{}, "id Like ?", uint(i))

@@ -4,23 +4,25 @@ import (
 	"tfs-03db/model"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/sirupsen/logrus"
 )
 
-func Connect() *gorm.DB {
-	db, err := gorm.Open("mysql", "root:giadinh310@tcp(localhost:3306)/tfs-03")
+type Database struct {
+	*gorm.DB
+}
+
+func Connect() *Database {
+	conn, err := gorm.Open("mysql", "root:giadinh310@tcp(localhost:3306)/tfs-03")
 	if err != nil {
 		logrus.Error("loi ket noi db", err)
 	}
-	return db
+	return &Database{conn}
 }
 
-func CreateTable() {
-	database := Connect()
+func (db *Database) ServeInit() {
 	var people model.People
-	database.DropTableIfExists("peoples")
-	err := database.AutoMigrate(&people)
-	if err != nil {
-		logrus.Error(err)
-	}
+
+	db.DropTableIfExists("peoples")
+	db.AutoMigrate(&people)
 }
