@@ -1,0 +1,11 @@
+export const REGISTER = "register";
+export const LOGIN = "login";
+export const CHECK_AUTHENTICATE = "checkAuthenticate";
+export const FETCH_ARTICLES = "fetchArticles";
+export const FETCH_ARTICLE = "fetchArticle"
+export const FETCH_TAGS = "fetchTags";
+export const POST_ARTICLES = "postArticles";
+export const FETCH_COMMENTS = "fetchComments";
+export const UPDATE_PROFILE = "updateProfile"
+export const LOGOUT = "logout"
+export const FETCH_USER_ARTICLES = "fetchUserArticle"
